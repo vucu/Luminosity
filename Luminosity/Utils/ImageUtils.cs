@@ -1,26 +1,33 @@
-﻿using System.Windows.Media;
+﻿using System;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace Luminosity.Utils
 {
-    public class ImageUtils
+    public static class ImageUtils
     {
-        public static double CalculateLuminance(double r, double g, double b)
+        public static double CalculateLuminance(double rNorm, double gNorm, double bNorm)
         {
-            var y = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+            var y = 0.2126 * rNorm + 0.7152 * gNorm + 0.0722 * bNorm;
             return y;
         }
 
-        public static void LuminanceBlend(WriteableBitmap source)
+        public static Color LuminanceBlend(this Color source)
         {
-            int width = source.PixelWidth;
-            int height = source.PixelHeight;
-            int stride = source.BackBufferStride;
-            int bytesPerPixel = (source.Format.BitsPerPixel + 7) / 8;
+            var rNorm = (double)source.R / 255;
+            var gNorm = (double)source.G / 255;
+            var bNorm = (double)source.B / 255;
+            var yNorm = CalculateLuminance(rNorm, gNorm, bNorm);
+            var lightness = Convert.ToByte((uint)Math.Round(yNorm * 255));
+            var r = lightness;
+            var g = lightness;
+            var b = lightness;
+            return Color.FromRgb(r, g, b);
+        }
 
-            source.Lock();
-
-
+        public static void LuminanceBlend(this WriteableBitmap source)
+        {
+            source.ForEach((x, y, c) => c.LuminanceBlend());
         }
     }
 }

@@ -22,6 +22,7 @@ namespace Luminosity
         private void OnPasteFromClipboard(object sender, RoutedEventArgs e)
         {
             var image = ClipboardUtils.ImageFromClipboardDib().AsWriteable();
+            image.LuminanceBlend();
             MyImage.Source = image;
 
             if (MyCanvas.Width < image.Width)
