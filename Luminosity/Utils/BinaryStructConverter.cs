@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace Luminosity
+namespace Luminosity.Utils
 {
     public static class BinaryStructConverter
     {

@@ -5,13 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Luminosity"
         mc:Ignorable="d"
-        Title="Luminosity" 
-        Height="900" 
-        Width="1440">
+        Title="Luminosity"
+        WindowStartupLocation="CenterScreen"
+        Height="720" 
+        Width="1152">
     <DockPanel>
         <ToolBar DockPanel.Dock="Top">
             <Button Click="OnPasteFromClipboard">Paste from clipboard</Button>
         </ToolBar>
-        <Image x:Name="MyImage"/>
+        <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible"
+                      x:Name="MyScrollViewer">
+            <Canvas x:Name="MyCanvas"
+                      Width="2560"
+                      Height="1600">
+                <Image x:Name="MyImage"/>
+            </Canvas>
+        </ScrollViewer>
     </DockPanel>
 </Window>
